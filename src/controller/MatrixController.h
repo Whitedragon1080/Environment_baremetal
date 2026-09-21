@@ -1,13 +1,17 @@
 #ifndef SRC_CONTROLLER_MATRIX_CONTROLLER_H
 #define SRC_CONTROLLER_MATRIX_CONTROLLER_H
 
+#include <cstdint>
 class MatrixController {
   private:
     int count;
-    void readMatrix();
+    uint64_t readMatrix();
     bool isAttack;
     void init();
-    int state[8][8]; 
+    uint64_t state; 
+    void checkState();
+    void setOutput(int pin, bool output);
+    void handleStateChange(uint64_t position);
 
   public:
    MatrixController(int count, bool isAttack);
