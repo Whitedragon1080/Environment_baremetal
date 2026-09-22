@@ -12,6 +12,7 @@ class MatrixController {
     void checkState();
     void setOutput(int pin, bool output);
     void handleStateChange(uint64_t position);
+    bool capturing;
 
   public:
    MatrixController(int count, bool isAttack);

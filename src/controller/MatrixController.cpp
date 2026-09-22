@@ -1,8 +1,9 @@
 #include "MatrixController.h"
 #include "../startup/matrixinputStartup.cpp"
 #include <cstdint>
+#include <string>
 //controller is initialized with the state how a chessboard should start
-MatrixController::MatrixController(int count, bool isAttack) : count(count), isAttack(isAttack), state(0b1111111111111111000000000000000000000000000000001111111111111111) { 
+MatrixController::MatrixController(int count, bool isAttack) : count(count), isAttack(isAttack), capturing(false), state(0b1111111111111111000000000000000000000000000000001111111111111111) { 
 
 }
 //activate the pins needed for communication
@@ -57,8 +58,7 @@ void MatrixController::checkState(){
 
     if(state != currentState){ // if it has changed
         count++;
-        if(count >= 10 && !isAttack){ //the state has changed and no attack is currently in progress
-            isAttack = true;
+        if(count >= 10){ //the state has changed 
             handleStateChange(state ^ currentState);
             state = currentState; //update internal state to the updated one after attack was handled
             count = 0;
@@ -71,9 +71,30 @@ void MatrixController::checkState(){
 //if there was no attack before the statechange, the attack state is in progress and the LED's with the pieces legal moves should be light up
 //if attack was in progress before statechange, the attack should be resolved
 void MatrixController::handleStateChange(uint64_t position){
-    /* const position_int = concatZeroesUntilSizeMatches((num1 ^ num2).toString(2), 64).indexOf("1"); //because of the xor, theres a 1 only at the changed position
-		const xPositionStr = String.fromCharCode("a".charCodeAt(0) + (position_int % 8));
-		const yPositionStr = String.fromCharCode(position_int / 8 + 1);
-		const positionInChessNotation = xPositionStr + yPositionStr; */
-        
+     const int position_int = concatZeroesUntilSizeMatches((num1 ^ num2).toString(2), 64).indexOf("1"); //because of the xor, theres a 1 only at the changed position
+		const char xPositionStr = String.fromCharCode("a".charCodeAt(0) + (position_int % 8));
+		const char yPositionStr = String.fromCharCode(position_int / 8 + 1);
+		const char positionInChessNotation = xPositionStr + yPositionStr; 
+    //check if more than 1 changed
+    foo();
+
+    //check if 1 to 0 -> piece was lifted
+    doo();
+    //if its an attack, check if lifted piece was in legal moves of initiating piece
+    if(isAttack){
+        //if in legal moves, make the field light up in red to signal it getting captured, set internal flag
+        if(chessCheck()){
+            captureLED(positionInChessNotation);
+            capturing = true;
+        } //if not in legal moves, make buzzer sound 
+        else{
+            buzzer();
+        }
+
+    } //if no attack, give position to chess api, fetch legal moves and make LEDs light up
+    else{
+        chessdo();
+        ledDo();
+        isAttack = true;
+    }
 }
