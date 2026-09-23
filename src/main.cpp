@@ -7,9 +7,13 @@ int main () {
 
     Movelist moves;
     movegen::legalmoves(moves, board);
-
+    Movelist pieceLegalMoves;
+    Square position = Square(Square::underlying::SQ_A2);
     for (const auto &move : moves) {
-        std::cout << uci::moveToUci(move) << std::endl;
+        if(move.from() == position) {
+            pieceLegalMoves.add(move);
+            std::cout << uci::moveToUci(move) << std::endl;
+        }
     }
 
     return 0;

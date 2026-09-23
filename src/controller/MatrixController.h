@@ -2,20 +2,34 @@
 #define SRC_CONTROLLER_MATRIX_CONTROLLER_H
 
 #include <cstdint>
+#include <string>
+#include "../../include/chess.hpp"
+
+using namespace chess;
 class MatrixController {
   private:
     int count;
     uint64_t readMatrix();
-    bool isAttack;
-    void init();
     uint64_t state; 
-    void checkState();
+    uint64_t oldState;
     void setOutput(int pin, bool output);
     void handleStateChange(uint64_t position);
     bool capturing;
-
-  public:
-   MatrixController(int count, bool isAttack);
+    bool getAttackState();
+    chess::Square change;
+    chess::Square square;
+    Square posToSquare(uint64_t position);
+    
+    public:
+    void soundBuzzer();
+    void clearLED();
+    chess::Square getChange();
+    MatrixController(int count);
+    void turnFinished();
+    void revert();
+    bool checkState();
+    void init();
+    void setLEDs(chess::Movelist squares, int color);
 };
 
 #endif

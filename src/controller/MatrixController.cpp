@@ -1,24 +1,26 @@
 #include "MatrixController.h"
 #include "../startup/matrixinputStartup.cpp"
 #include <cstdint>
-#include <string>
+
 //controller is initialized with the state how a chessboard should start
-MatrixController::MatrixController(int count, bool isAttack) : count(count), isAttack(isAttack), capturing(false), state(0b1111111111111111000000000000000000000000000000001111111111111111) { 
+MatrixController::MatrixController(int count, bool isAttack) : count(count), capturing(false), state(0b1111111111111111000000000000000000000000000000001111111111111111) { 
 
 }
 //activate the pins needed for communication
 void MatrixController::init(){
     pinEN();
+    oldState = state;
 }
 //set the bit of the respective Pin, if its a D pin
 void MatrixController::setOutput(int pin, bool enabled){  
   if(enabled){
       GPIOD -> ODR |= (1 << pin);
-  } else {
+  } else { 
       GPIOD -> ODR &= ~(1 << pin);
   }    
 }
 //read the matrix and notify if a change persists for 10 readings
+//TODO: Change implementation to fit hardware
 uint64_t MatrixController::readMatrix() {
   uint64_t output = 0;
   for(int row = 0; row <= 7; row++){
@@ -53,7 +55,7 @@ uint64_t MatrixController::readMatrix() {
     return output;
 }
 //this should be the function that gets looped to listen to the board
-void MatrixController::checkState(){
+bool MatrixController::checkState(){
     uint64_t currentState = readMatrix();
 
     if(state != currentState){ // if it has changed
@@ -62,39 +64,51 @@ void MatrixController::checkState(){
             handleStateChange(state ^ currentState);
             state = currentState; //update internal state to the updated one after attack was handled
             count = 0;
+            return true;
         }
     } else {
         count--;
+        return false;
     }
 }
 
 //if there was no attack before the statechange, the attack state is in progress and the LED's with the pieces legal moves should be light up
 //if attack was in progress before statechange, the attack should be resolved
 void MatrixController::handleStateChange(uint64_t position){
-     const int position_int = concatZeroesUntilSizeMatches((num1 ^ num2).toString(2), 64).indexOf("1"); //because of the xor, theres a 1 only at the changed position
-		const char xPositionStr = String.fromCharCode("a".charCodeAt(0) + (position_int % 8));
-		const char yPositionStr = String.fromCharCode(position_int / 8 + 1);
-		const char positionInChessNotation = xPositionStr + yPositionStr; 
-    //check if more than 1 changed
+    //Query, if more than one bit is changed -> position has more than one 1
     foo();
+    //determine the position of the changed position
+    change = posToSquare(position);
+}
 
-    //check if 1 to 0 -> piece was lifted
-    doo();
-    //if its an attack, check if lifted piece was in legal moves of initiating piece
-    if(isAttack){
-        //if in legal moves, make the field light up in red to signal it getting captured, set internal flag
-        if(chessCheck()){
-            captureLED(positionInChessNotation);
-            capturing = true;
-        } //if not in legal moves, make buzzer sound 
-        else{
-            buzzer();
-        }
+// prerequisite: position contains only a single "1"
+Square MatrixController::posToSquare(uint64_t position) {
+    //TODO may need additional arithmetic
+    int onesPosition = std::log2(position);
+    return onesPosition;
+} 
 
-    } //if no attack, give position to chess api, fetch legal moves and make LEDs light up
-    else{
-        chessdo();
-        ledDo();
-        isAttack = true;
-    }
+
+chess::Square MatrixController::getChange(){
+    return change;
+}
+
+void MatrixController::turnFinished(){
+    oldState = state;
+}
+
+void MatrixController::revert(){
+    state = oldState;
+}
+//TODO:IMPLEMENT
+void MatrixController::setLEDs(Movelist squares, int color){
+
+}
+//TODO:IMPLEMENT
+void MatrixController::clearLED(){
+
+}
+
+void MatrixController::soundBuzzer(){
+    
 }
