@@ -18,6 +18,25 @@ bool ChessController::isLegalDestination(chess::Square position){
     return false;
 }
 
+bool ChessController::getMovesForSquare(chess::Square position){
+    //get all possible moves of the board
+    board.legalMoves(relevantSquares, board);
+    chess::Movelist tmp = chess::Movelist();
+    //filter out all moves not from the Square // TODO separate function :-(
+    for(const auto &move : relevantSquares){
+        if(move.from() == position){
+            tmp.add(move);
+        }
+    }
+    //if no possible moves from this square, then false
+    if(tmp.empty()){
+        return false;
+    }
+    //give out the filtered list, set the current square as attackingField and initalize attack
+    relevantSquares = tmp;
+    return true;
+}
+
 bool ChessController::handleAction(chess::Square position){
     Piece piece = board.at(position);
     //if no attack is in progress
@@ -26,21 +45,9 @@ bool ChessController::handleAction(chess::Square position){
         if(piece == Piece::NONE){
             return false;
         }
-        //get all possible moves of the board
-        board.legalMoves(relevantSquares, board);
-        chess::Movelist tmp = chess::Movelist();
-        //filter out all moves not from the Square // TODO separate function :-(
-        for(const auto &move : relevantSquares){
-            if(move.from() == position){
-                tmp.add(move);
-            }
-        }
-        //if no possible moves from this square, then false
-        if(tmp.empty()){
+        if(!getMovesForSquare(position)){
             return false;
         }
-        //give out the filtered list, set the current square as attackingField and initalize attack
-        relevantSquares = tmp;
         attackField = position;
         isAttack = true;
         return true;
@@ -53,19 +60,20 @@ bool ChessController::handleAction(chess::Square position){
         return false;
     }
     if(piece != Piece::NONE){
-    if(!capturing){
+        if(!capturing){
         capturedField = position;
         capturing = true;
         return true;
-    }
-    if(position != capturedField){
+        }
+        if(position != capturedField){
         return false;
-    }
-    capturing = false; 
-    }
+        }
+        capturing = false; 
+        }
     board.move(capturingMove);
     isAttack = false;
     reset = true;
+    relevantSquares = Movelist();
     return true;
 }
 

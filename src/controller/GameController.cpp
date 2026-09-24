@@ -12,10 +12,13 @@ void GameController::handleGame(){
     if(!ChessController.handleAction(MatrixController.getChange())){
         MatrixController.activateBuzzer();
         MatrixController.revert();
-    }
-    chess::Movelist tmp = ChessController.getRelevantSquares();
-    if(ChessController.getReset()){
-        MatrixController.clearLED();
         ChessController.setReset(false);
     }
+    chess::Movelist tmp = ChessController.getRelevantSquares();
+    if(tmp.empty()){
+        MatrixController.clearLED();
+        ChessController.setReset(false);
+        return;
+    }
+    MatrixController.setLEDs(tmp, 0);
 }

@@ -15,6 +15,7 @@ class ChessController{
         chess::Square capturedField;
         chess::Move capturingMove;
         bool reset;
+        bool getMovesForSquare(chess::Square position);
     public:
         bool isLegalDestination(chess::Square position);
         void init();
