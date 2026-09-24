@@ -3,7 +3,7 @@
 #include <cstdint>
 
 //controller is initialized with the state how a chessboard should start
-MatrixController::MatrixController(int count, bool isAttack) : count(count), capturing(false), state(0b1111111111111111000000000000000000000000000000001111111111111111) { 
+MatrixController::MatrixController(int count) : count(count), capturing(false), state(0b1111111111111111000000000000000000000000000000001111111111111111) { 
 
 }
 //activate the pins needed for communication
@@ -47,11 +47,6 @@ uint64_t MatrixController::readMatrix() {
         output = (output & (~(uint64_t{1} << bitIndex))) | (uint64_t{reading} << bitIndex); // output[bitIndex] = reading;
       }
     }
-    
-    GPIOA->ODR |= 1<<5; // Set the Pin PA5
-
-    GPIOA->ODR &= ~(1<<5); // Reset the Pin PA5
-
     return output;
 }
 //this should be the function that gets looped to listen to the board
@@ -119,15 +114,15 @@ void MatrixController::setLEDs(Movelist squares, int color){
 }
 //TODO:IMPLEMENT
 void MatrixController::clearLED(){
-    
+
 }
 
 void MatrixController::deactivateBuzzer(){
-
+    setOutput(6, false);
 }
 
 void MatrixController::activateBuzzer(){
-    
+    setOutput( 6, true);
 }
 
 void MatrixController::setAllLEDs(){
