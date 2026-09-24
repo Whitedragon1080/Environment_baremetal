@@ -23,6 +23,6 @@ class ChessController{
         chess::Movelist getRelevantSquares();
         bool getReset();
         void setReset(bool set);
-        
+        bool isGameOver();
 };
 #endif

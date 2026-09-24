@@ -103,8 +103,15 @@ void MatrixController::revert(){
     deactivateBuzzer();
 }
 //TODO:IMPLEMENT
-void MatrixController::setLEDs(Movelist squares, int color){
 
+void MatrixController::turnOnLED(chess::Square field){
+
+}
+void MatrixController::setLEDs(Movelist squares, int color){
+    for(const auto& move : squares){
+        chess:Square destination = move.to();
+        turnOnLED(destination);
+    }
 }
 //TODO:IMPLEMENT
 void MatrixController::clearLED(){
@@ -116,5 +123,9 @@ void MatrixController::deactivateBuzzer(){
 }
 
 void MatrixController::activateBuzzer(){
+    
+}
+
+void MatrixController::setAllLEDs(){
     
 }

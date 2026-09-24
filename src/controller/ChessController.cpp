@@ -73,7 +73,7 @@ bool ChessController::handleAction(chess::Square position){
     board.move(capturingMove);
     isAttack = false;
     reset = true;
-    relevantSquares = Movelist();
+    relevantSquares.clear();
     return true;
 }
 
@@ -87,4 +87,9 @@ bool ChessController::getReset(){
 
 void ChessController::setReset(bool set){
     reset = set;
+}
+
+bool ChessController::isGameOver(){
+    chess::Movelist moves = board.legalMoves(moves, board);
+    return moves.empty();
 }

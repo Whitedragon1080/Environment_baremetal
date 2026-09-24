@@ -9,9 +9,11 @@ class GameController{
         void handleGame();
         MatrixController MatrixController;
         ChessController ChessController;
+        void endGame();
     public:
         GameController();
         void init();
+
 };
 
 #endif
