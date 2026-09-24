@@ -98,7 +98,9 @@ void MatrixController::turnFinished(){
 }
 
 void MatrixController::revert(){
+    while(!(readMatrix() == oldState));
     state = oldState;
+    deactivateBuzzer();
 }
 //TODO:IMPLEMENT
 void MatrixController::setLEDs(Movelist squares, int color){
@@ -109,6 +111,10 @@ void MatrixController::clearLED(){
 
 }
 
-void MatrixController::soundBuzzer(){
+void MatrixController::deactivateBuzzer(){
+
+}
+
+void MatrixController::activateBuzzer(){
     
 }

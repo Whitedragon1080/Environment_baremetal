@@ -21,7 +21,7 @@ class MatrixController {
     Square posToSquare(uint64_t position);
     
     public:
-    void soundBuzzer();
+    void toggleBuzzer();
     void clearLED();
     chess::Square getChange();
     MatrixController(int count);
@@ -30,6 +30,8 @@ class MatrixController {
     bool checkState();
     void init();
     void setLEDs(chess::Movelist squares, int color);
+    void activateBuzzer();
+    void deactivateBuzzer();
 };
 
 #endif

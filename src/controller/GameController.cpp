@@ -10,11 +10,12 @@ void GameController::handleGame(){
     while(!MatrixController.checkState());
     
     if(!ChessController.handleAction(MatrixController.getChange())){
-        MatrixController.soundBuzzer();
+        MatrixController.activateBuzzer();
         MatrixController.revert();
     }
     chess::Movelist tmp = ChessController.getRelevantSquares();
     if(ChessController.getReset()){
         MatrixController.clearLED();
+        ChessController.setReset(false);
     }
 }

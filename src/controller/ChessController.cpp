@@ -76,3 +76,7 @@ chess::Movelist ChessController::getRelevantSquares(){
 bool ChessController::getReset(){
     return reset;
 }
+
+void ChessController::setReset(bool set){
+    reset = set;
+}
