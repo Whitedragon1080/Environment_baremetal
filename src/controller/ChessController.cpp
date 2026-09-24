@@ -93,3 +93,10 @@ bool ChessController::isGameOver(){
     chess::Movelist moves = board.legalMoves(moves, board);
     return moves.empty();
 }
+
+chess::Square ChessController::getCapturedField(){
+    return capturedField;
+}
+bool ChessController::isCapturing(){
+    return capturing;
+}

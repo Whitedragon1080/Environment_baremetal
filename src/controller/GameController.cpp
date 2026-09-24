@@ -18,6 +18,10 @@ void GameController::handleGame(){
         MatrixController.revert();
         ChessController.setReset(false);
     }
+    if(ChessController.isCapturing()){
+        MatrixController.clearLED();
+        MatrixController.turnOnLED(ChessController.getCapturingField());
+    }
     //get the fields that can be used
     chess::Movelist legalFields = ChessController.getRelevantSquares();
     //only empty in this point if Chesscontroller flushed the list, so the turn has to be over

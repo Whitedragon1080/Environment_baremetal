@@ -19,10 +19,10 @@ class MatrixController {
     chess::Square change;
     chess::Square square;
     Square posToSquare(uint64_t position);
-    void turnOnLED(chess::Square field);
     void turnOffLED(chess::Square field);
     
     public:
+    void turnOnLED(chess::Square field);
     void toggleBuzzer();
     void clearLED();
     chess::Square getChange();

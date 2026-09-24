@@ -24,5 +24,7 @@ class ChessController{
         bool getReset();
         void setReset(bool set);
         bool isGameOver();
+        chess::Square getCapturedField();
+        bool isCapturing();
 };
 #endif

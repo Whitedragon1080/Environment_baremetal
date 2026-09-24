@@ -14,9 +14,57 @@ void MatrixController::init(){
 //set the bit of the respective Pin, if its a D pin
 void MatrixController::setOutput(int pin, bool enabled){  
   if(enabled){
-      GPIOD -> ODR |= (1 << pin);
+    if(pin == 0){
+        digitalWrite(11, HIGH);
+    }
+    if(pin == 1){
+        digitalWrite(13, HIGH);
+    }
+    if(pin == 2){
+        digitalWrite(15, HIGH);
+    }
+    if(pin== 3){
+        digitalWrite(16, HIGH);
+    }
+    if(pin == 4){
+        digitalWrite(18, LOW);
+    }
+    if(pin == 5){
+        digitalWrite(22, LOW);
+    }
+    if(pin == 6){
+        digitalWrite(29, LOW);
+    }
+    if(pin == 7){
+        digitalWrite(31, LOW);
+    }
+    //  GPIOD -> ODR |= (1 << pin);
   } else { 
-      GPIOD -> ODR &= ~(1 << pin);
+    //  GPIOD -> ODR &= ~(1 << pin);
+    if(pin == 0){
+        digitalWrite(11, LOW);
+    }
+    if(pin == 1){
+        digitalWrite(13, LOW);
+    }
+    if(pin == 2){
+        digitalWrite(15, LOW);
+    }
+    if(pin== 3){
+        digitalWrite(16, LOW);
+    }
+    if(pin == 4){
+        digitalWrite(18, HIGH);
+    }
+    if(pin == 5){
+        digitalWrite(22, HIGH);
+    }
+    if(pin == 6){
+        digitalWrite(29, HIGH);
+    }
+    if(pin == 7){
+        digitalWrite(31, HIGH);
+    }
   }    
 }
 //read the matrix and notify if a change persists for 10 readings
