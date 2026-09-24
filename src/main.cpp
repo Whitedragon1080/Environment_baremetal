@@ -1,10 +1,10 @@
 
-#include "GameController.h"
+#include "controller/GameController.h"
 using namespace chess;
 
 
 int main () {
-    GameController::GameController Controller = GameController();
+    GameController Controller = GameController();
     Controller.init();
     while(1){
         Controller.handleGame();

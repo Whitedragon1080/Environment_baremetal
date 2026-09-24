@@ -6,12 +6,12 @@
 
 class GameController{
     private:
-        void handleGame();
-        MatrixController MatrixController;
-        ChessController ChessController;
-        void endGame();
-        bool gameOver;
+    MatrixController MatrixController;
+    ChessController ChessController;
+    void endGame();
+    bool gameOver;
     public:
+    void handleGame();
         GameController();
         void init();
         bool isGameOver();
