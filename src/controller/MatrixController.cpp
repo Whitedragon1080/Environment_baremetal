@@ -23,7 +23,8 @@ void MatrixController::setOutput(int pin, bool enabled){
 //TODO: Change implementation to fit hardware
 uint64_t MatrixController::readMatrix() {
   uint64_t output = 0;
-  for(int row = 0; row <= 7; row++){
+  /* deprecated, hardware not compatible 
+        for(int row = 0; row <= 7; row++){
       bool isRowSelectAEnabled = row == 0 || row == 1 || row == 2 || row == 4; //results in: 1,1,1,0,1,0,0,0
       bool isRowSelectBEnabled = row == 1 || row == 2 || row == 5 || row == 6; //results in: 0,1,1,0,0,1,1,0
       bool isRowSelectCEnabled = row == 0 || row == 2 || row == 6 || row == 7; //results in: 1,0,1,0,0,0,1,1
@@ -45,7 +46,26 @@ uint64_t MatrixController::readMatrix() {
         //set the corresponding bit in the current State, 0 = no figure on it
         int bitIndex = 63 - (row * 8 + col);
         output = (output & (~(uint64_t{1} << bitIndex))) | (uint64_t{reading} << bitIndex); // output[bitIndex] = reading;
-      }
+        */
+    for(int square = 0; square <= 15; square++){
+        bool setSquare0 = square == 1 || square == 3 || square == 5|| square == 7 ||square == 9 || square == 11 || square == 13|| square == 15; 
+        bool setSquare1 = square == 2 || square == 3 ||square == 6 ||square == 7 || square == 10 || square == 11 || square == 14 || square == 15;
+        bool setSquare2 = square == 4 || square == 5 || square == 6 || square == 7 || square == 12 ||square == 13 ||square == 14 || square == 15;
+        bool setSquare3 = square >= 8;
+
+        setOutput(0, setSquare0);
+        setOutput(1, setSquare1);
+        setOutput(2, setSquare2);
+        setOutput(3, setSquare3);
+
+        for(int mux = 4; mux <= 7; mux++){
+            setOutput(mux, true);
+            int index = 12 + (mux - 4);
+            bool reading = ((1 << index) & GPIO -> IDR) >> index;
+            int bitIndex = 63 - ((mux - 4) * 16 + square);
+            output = (output & (~(uint64_t{1} << bitIndex))) | (uint64_t{reading} << bitIndex); // output[bitIndex] = reading;
+            setOutput(mux, false);
+        }
     }
     return output;
 }
