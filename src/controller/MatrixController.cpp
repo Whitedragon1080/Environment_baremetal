@@ -138,11 +138,11 @@ void MatrixController::clearLED(){
 }
 
 void MatrixController::deactivateBuzzer(){
-    setOutput(6, false);
+    setOutput(10, false);
 }
 
 void MatrixController::activateBuzzer(){
-    setOutput( 6, true);
+    setOutput( 10, true);
 }
 
 void MatrixController::setAllLEDs(){
