@@ -1,6 +1,6 @@
 #ifndef SRC_STARTUP_MATRIX_INPUT_STARTUP_CPP
 #define SRC_STARTUP_MATRIX_INPUT_STARTUP_CPP
-
+#include <wiringPi.h> 
 //#include "stm32f0xx.h"
 
 void pinEN(){
@@ -14,7 +14,7 @@ void pinEN(){
     GPIOD -> MODER |= (GPIO_MODER_MODER0_0 | GPIO_MODER_MODER1_0 | GPIO_MODER_MODER2_0 | GPIO_MODER_MODER3_0 |GPIO_MODER_MODER4_0 | GPIO_MODER_MODER5_0 | GPIO_MODER_MODER6_0 |GPIO_MODER_MODER7_0 | GPIO_MODER_MODER8_0 | GPIO_MODER_MODER9_0);
     //set pins 12 to 15 of D into analogue mode
     GPIOD->MODER |= (GPIO_MODER_MODER12 | GPIO_MODER_MODER13 | GPIO_MODER_MODER14 | GPIO_MODER_MODER15); */
-    wiringPiSetupGpio();
+    wiringPiSetupPinType(WPI_PIN_PHYS);
     pinMode(11, OUTPUT);
     pinMode(13, OUTPUT);
     pinMode(15, OUTPUT);
