@@ -1,6 +1,6 @@
 #include "GameController.h"
 
-GameController::GameController() : MatrixController(0), ChessController(){}
+GameController::GameController() :gameOver(false), MatrixController(0), ChessController(){}
 
 void GameController::init(){
     ChessController.init();
@@ -37,4 +37,9 @@ void GameController::handleGame(){
 
 void GameController::endGame(){
     MatrixController.setAllLEDs();
+    gameOver = true;
+}
+
+bool GameController::isGameOver(){
+    return gameOver;
 }

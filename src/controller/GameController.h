@@ -10,10 +10,11 @@ class GameController{
         MatrixController MatrixController;
         ChessController ChessController;
         void endGame();
+        bool gameOver;
     public:
         GameController();
         void init();
-
+        bool isGameOver();
 };
 
 #endif
