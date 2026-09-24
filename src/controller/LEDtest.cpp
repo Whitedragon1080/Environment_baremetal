@@ -1,4 +1,4 @@
-cat four_sensor_led_test.py
+/*cat four_sensor_led_test.py
 import time
 import RPi.GPIO as GPIO
 from smbus import SMBus
@@ -36,7 +36,6 @@ REG_CONVERSION = 0x00
 REG_CONFIG = 0x01
 
 bus = SMBus(1)
-
 
 # =========================================================
 # CD74HC4067
@@ -309,3 +308,4 @@ finally:
 
     GPIO.cleanup()
     bus.close()
+    */

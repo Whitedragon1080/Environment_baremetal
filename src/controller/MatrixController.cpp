@@ -109,7 +109,7 @@ uint64_t MatrixController::readMatrix() {
         for(int mux = 4; mux <= 7; mux++){
             setOutput(mux, true);
             int index = 12 + (mux - 4);
-            bool reading = ((1 << index) & GPIO -> IDR) >> index;
+            bool reading = ((1 << index) ) >> index;
             int bitIndex = 63 - ((mux - 4) * 16 + square);
             output = (output & (~(uint64_t{1} << bitIndex))) | (uint64_t{reading} << bitIndex); // output[bitIndex] = reading;
             setOutput(mux, false);
@@ -139,7 +139,6 @@ bool MatrixController::checkState(){
 //if attack was in progress before statechange, the attack should be resolved
 void MatrixController::handleStateChange(uint64_t position){
     //Query, if more than one bit is changed -> position has more than one 1
-    foo();
     //determine the position of the changed position
     change = posToSquare(position);
 }
