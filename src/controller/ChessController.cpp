@@ -88,7 +88,8 @@ void ChessController::setReset(bool set){
 }
 
 bool ChessController::isGameOver(){
-    chess::Movelist moves = movegen::legalmoves(moves, board);
+    chess::Movelist moves = chess::Movelist();
+    movegen::legalmoves(moves, board);
     return moves.empty();
 }
 
