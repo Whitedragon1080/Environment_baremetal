@@ -6,8 +6,8 @@
 
 class GameController{
     private:
-    MatrixController MatrixController;
-    ChessController ChessController;
+    MatrixController matrix;
+    ChessController chess;
     void endGame();
     bool gameOver;
     public:

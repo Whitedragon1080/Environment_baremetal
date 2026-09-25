@@ -1,4 +1,3 @@
-
 #include "controller/GameController.h"
 using namespace chess;
 
