@@ -20,7 +20,7 @@ void GameController::handleGame(){
     }
     if(chess.isCapturing()){
         matrix.clearLED();
-        matrix.turnOnLED(chess.getCapturingField());
+        matrix.turnOnLED(chess.getCapturedField());
     }
     //get the fields that can be used
     chess::Movelist legalFields = chess.getRelevantSquares();
@@ -29,7 +29,6 @@ void GameController::handleGame(){
         //turn is over, turn off all LEDs and signal as much to the other controllers
         matrix.clearLED();
         chess.setReset(false);
-        chess.turnFinished();
         if(chess.isGameOver()){
             endGame();
         }

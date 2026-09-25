@@ -26,5 +26,6 @@ class ChessController{
         bool isGameOver();
         chess::Square getCapturedField();
         bool isCapturing();
+        void finish();
 };
 #endif
