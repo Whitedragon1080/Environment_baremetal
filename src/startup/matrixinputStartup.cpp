@@ -1,8 +1,11 @@
 #ifndef SRC_STARTUP_MATRIX_INPUT_STARTUP_CPP
 #define SRC_STARTUP_MATRIX_INPUT_STARTUP_CPP
-#include <wiringPi.h> 
+#include "matrixinputStartup.h" 
 //#include "stm32f0xx.h"
 
+matrixinputStartup::matrixinputStartup(){
+    
+}
 void pinEN(){
     /* deprecated, CMSIS not compatible with Pi alone, kept in case someone wants to experiment later down the line
     //Enable peripheral clock of pins C,D and F

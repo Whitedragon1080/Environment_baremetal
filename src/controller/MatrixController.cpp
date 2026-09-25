@@ -1,5 +1,5 @@
 #include "MatrixController.h"
-#include "../startup/matrixinputStartup.cpp"
+#include "../startup/matrixinputStartup.h"
 #include <cstdint>
 
 //controller is initialized with the state how a chessboard should start
@@ -8,7 +8,8 @@ MatrixController::MatrixController(int count) : count(count), capturing(false), 
 }
 //activate the pins needed for communication
 void MatrixController::init(){
-    pinEN();
+    matrixinputStartup startup = matrixinputStartup();
+    startup.pinEN();
     oldState = state;
 }
 //set the bit of the respective Pin, if its a D pin
