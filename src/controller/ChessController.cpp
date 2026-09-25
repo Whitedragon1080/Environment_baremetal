@@ -20,7 +20,7 @@ bool ChessController::isLegalDestination(chess::Square position){
 
 bool ChessController::getMovesForSquare(chess::Square position){
     //get all possible moves of the board
-    board.legalmoves(relevantSquares, board);
+    movegen::legalmoves(relevantSquares, board);
     chess::Movelist tmp = chess::Movelist();
     //filter out all moves not from the Square // TODO separate function :-(
     for(const auto &move : relevantSquares){
@@ -70,7 +70,7 @@ bool ChessController::handleAction(chess::Square position){
         }
         capturing = false; 
         }
-    board.move(capturingMove);
+    board.makeMove(capturingMove);
     finish();
     return true;
 }
@@ -88,7 +88,7 @@ void ChessController::setReset(bool set){
 }
 
 bool ChessController::isGameOver(){
-    chess::Movelist moves = board.legalmoves(moves, board);
+    chess::Movelist moves = movegen::legalmoves(moves, board);
     return moves.empty();
 }
 
