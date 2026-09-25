@@ -1,6 +1,7 @@
 #ifndef SRC_CONTROLLER_MATRIX_CONTROLLER_H
 #define SRC_CONTROLLER_MATRIX_CONTROLLER_H
 
+#include "../startup/matrixinputStartup.h"
 #include <cstdint>
 #include <string>
 #include "../../include/chess.hpp"

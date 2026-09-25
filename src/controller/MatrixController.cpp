@@ -1,5 +1,4 @@
 #include "MatrixController.h"
-#include "../startup/matrixinputStartup.h"
 #include <cstdint>
 
 //controller is initialized with the state how a chessboard should start
