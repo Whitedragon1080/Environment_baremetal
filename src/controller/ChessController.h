@@ -9,7 +9,6 @@ class ChessController{
         chess::Square attackField;
         chess::Board board;
         bool isAttack;
-        bool handleAction(chess::Square position);
         chess::Movelist relevantSquares;
         bool capturing;
         chess::Square capturedField;
@@ -17,6 +16,7 @@ class ChessController{
         bool reset;
         bool getMovesForSquare(chess::Square position);
     public:
+        bool handleAction(chess::Square position);
         bool isLegalDestination(chess::Square position);
         void init();
         ChessController();

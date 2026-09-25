@@ -1,7 +1,7 @@
 #ifndef SRC_STARTUP_MATRIX_H
 #define SRC_STARTUP_MATRIX_H
 
-#include "../../include/wiringPi.h"
+#include <wiringPi.h>
 
 class matrixinputStartup{
     private:
